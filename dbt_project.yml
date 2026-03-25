@@ -1,0 +1,55 @@
+name: 'portfolio_performance'
+
+config-version: 2
+
+profile: 'portfolio_performance'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  portfolio_performance:
+    staging:
+      +materialized: view
+      +schema: staging
+    
+    inermediate:
+      +materialized: ephemeral
+    
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  portfolio_performance:
+    +schema: raw
+
+    ohlc:
+      +column_types:
+        date: date
+        open: double
+        high: double
+        low: double
+        close: double
+        volume: double
+        amount: double
+        per_change: double
+        MACD: double
+        MACD_signal: double
+        RSI_14: double
+      
+    trades:
+      +column_types:
+        entry_date: date
+        exit_date: date
+        entry_price: double
+        exit_price: double
+        pnl: double
+        pnl_pct: double
