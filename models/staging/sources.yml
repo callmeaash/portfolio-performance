@@ -5,7 +5,7 @@ sources:
     description: >
       Raw data loaded via `dbt seed`. Contains ohlc data and trades data
       generated from ohlc data.
-    schema: main_raw
+    schema: raw
 
     tables:
       - name: ohlc

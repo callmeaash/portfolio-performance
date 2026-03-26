@@ -35,3 +35,41 @@ models:
         tests:
           - accepted_values:
               values: ["OVERSOLD", "UNDERSOLD", "NEUTRAL"]
+  
+  - name: stg_trades
+    description: >
+      Cleaned trade records. Filters out the records with invalid dates or prices.
+    columns:
+      - name: symbol
+        description: Stock ticker symbol
+        tests: [not_null]
+      - name: entry_date
+        description: Date the trade was entered
+        tests: [not_null]
+      - name: exit_date
+        description: Date the trade was exited
+        tests: [not_null]
+      - name: type
+        description: Trade direction — BUY or SELL
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["BUY", "SELL"]
+      - name: entry_price
+        description: Closing price at entry
+        tests: [not_null]
+      - name: exit_price
+        description: Closing price at exit
+        tests: [not_null]
+      - name: pnl
+        description: Absolute profit or loss
+        tests: [not_null]
+      - name: pnl_pct
+        description: Percentage PnL relative to entry price
+        tests: [not_null]
+      - name: result
+        description: Trade result
+        tests:
+          - accepted_values:
+              values: ["WIN", "LOSS"]
+      
