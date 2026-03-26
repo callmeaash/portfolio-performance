@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_ohlc
+    description: >
+      Cleaned daily OHLC candlestick data with pre-computed technical indicators.
+      Adds derived fields like daily range and indicator interpretation zones.
+    
+    columns:
+      - name: date
+        description: Trading date
+        tests: [not_null]
+      - name: symbol
+        description: Uppercased stock ticker symbol
+        tests: [not_null]
+      - name: close
+        description: Closing price
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+      - name: rsi_14
+        description: 14-period RSI value (0–100)
+      - name: macd
+        description: MACD line
+      - name: macd_signal
+        description: MACD signal line (9-period EMA of MACD)
+      - name: macd_trend
+        description: BULLISH when MACD > signal, else BEARISH
+        tests:
+          - accepted_values:
+              values: ["BULLISH", "BEARISH"]
+      - name: rsi_zone
+        description: RSI interpretation zone
+        tests:
+          - accepted_values:
+              values: ["OVERSOLD", "UNDERSOLD", "NEUTRAL"]
