@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: int_trade_metrics
+    description: >
+      Core intermediate model. Enriches each trade with holding days,
+      win/loss flags, gross profit/loss splits, duration buckets, and
+      time-period fields used across all marts.
+    
+  - name: int_daily_equity
+    description: >
+      Aggregates closed trades by exit date to build a daily equity curve.
+      Computes cumulative PnL, peak equity, absolute
+      and percentage drawdown, and rolling 7/30-day PnL windows
+  
+  - name: int_symbol_ohlc_stats
+    description: >
+      Per-symbol summary statistics derived from OHLC data: price range,
+      average close, volatility (daily range %), volume averages, RSI/MACD
+      averages, and counts of bullish/bearish/overbought/oversold days
