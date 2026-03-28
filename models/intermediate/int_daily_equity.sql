@@ -26,9 +26,18 @@ with_cumulative_pnl as (
         sum(daily_pnl) over (
             order by date
             rows between unbounded preceding and current row
-        ) as cumulative_pnl,
+        ) as cumulative_pnl
 
     from daily_pnl
+),
+
+with_equity as (
+
+    select
+        *,
+        cumulative_pnl + {{ var('starting_equity') }} as equity
+
+    from with_cumulative_pnl
 ),
 
 with_peak_equity as (
@@ -36,12 +45,12 @@ with_peak_equity as (
     select
         *,
 
-        max(cumulative_pnl) over (
+        max(equity) over (
             order by date
             rows between unbounded preceding and current row
         ) as peak_equity
     
-    from with_cumulative_pnl
+    from with_equity
 ),
 
 with_drawdown as (
@@ -49,8 +58,9 @@ with_drawdown as (
     select
         *,
 
-        round(cumulative_pnl - peak_equity, 2) as drawdown,
-        round(cumulative_pnl - peak_equity, 2) / nullif(peak_equity, 0) * 100 as drawdown_pct,
+        (peak_equity - equity) as drawdown_abs,
+
+        (peak_equity - equity) / nullif(peak_equity, 0) * 100 as drawdown_pct,
 
         sum(daily_pnl) over (
             order by date
@@ -66,4 +76,4 @@ with_drawdown as (
 )
 
 select * from with_drawdown
-
+order by date

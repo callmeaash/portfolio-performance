@@ -23,7 +23,7 @@ enriched as (
 
         cast(exit_date - entry_date as integer) as holding_days,
 
-        case when result = 'BUY' then 1 else 0 end as is_win,
+        case when result = 'WIN' then 1 else 0 end as is_win,
         case when result = 'LOSS' then 1 else 0 end as is_loss,
 
         case when pnl > 0 then pnl else 0 end as gross_profit,

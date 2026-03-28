@@ -6,5 +6,5 @@ logs/
 *.duckdb
 .vscode/
 .user.yml
-
+portfolio-dashboard
 

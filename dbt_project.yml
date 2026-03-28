@@ -20,7 +20,7 @@ models:
       +materialized: view
       +schema: staging
     
-    inermediate:
+    intermediate:
       +materialized: ephemeral
     
     marts:
@@ -53,3 +53,5 @@ seeds:
         exit_price: double
         pnl: double
         pnl_pct: double
+vars:
+  starting_equity: 10000

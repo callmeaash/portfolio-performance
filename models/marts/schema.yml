@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: mart_portfolio_summary
+    description: >
+      Single-row portfolio-wide KPI table. Covers total trades, win rate,
+      total PnL, profit factor, expectancy, Calmar ratio,max drawdown,
+      and trade duration distribution.
+  
+  - name: mart_symbol_performance
+    description: >
+      One row per traded symbol with full performance metrics. Includes the
+      portfolio contribution rank.
+  
+  - name: mart_daily_pnl
+    description: >
+      One row per trading day with daily PnL, cumulative equity curve,
+      drawdown, rolling 7/30-day PnL, and flags for new equity peaks.
+  
+  - name: mart_monthly_performance
+    description: >
+      Monthly roll-up of trades with PnL totals, win rate, profit factor,
+      month-over-month PnL change, and a GREEN/RED month label.
+  

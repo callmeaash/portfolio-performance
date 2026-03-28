@@ -22,12 +22,12 @@ stats as (
 
         round(avg(daily_range_pct), 2) as avg_daily_range_pct,
 
-        round(avg(volume), 0) as average_daily_volume,
+        round(avg(volume), 0) as avg_daily_volume,
         round(sum(volume), 0) as total_volume,
         round(sum(traded_amount), 2) as average_daily_amount,
 
-        round(avg(rsi_14), 2) as average_rsi,
-        round(avg(macd), 4) as average_macd,
+        round(avg(rsi_14), 2) as avg_rsi,
+        round(avg(macd), 4) as avg_macd,
 
         count(*) filter (
             where macd_trend = 'BULLISH'
@@ -53,4 +53,11 @@ stats as (
     group by symbol
 )
 
-select * from stats
+select
+    *,
+    round(bullish_days  * 100.0 / nullif(total_trading_days, 0), 1) as bullish_day_pct,
+    round(bearish_days  * 100.0 / nullif(total_trading_days, 0), 1) as bearish_day_pct,
+    round(overbought_days * 100.0 / nullif(total_trading_days, 0), 1) as overbought_day_pct,
+    round(oversold_days   * 100.0 / nullif(total_trading_days, 0), 1) as oversold_day_pct
+
+from stats
