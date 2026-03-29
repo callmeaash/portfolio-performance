@@ -5,3 +5,4 @@ from {{ ref('stg_trades') }}
 where
     (result = 'WIN' and pnl < 0)
     or (result = 'LOSS' and pnl > 0)
+ 

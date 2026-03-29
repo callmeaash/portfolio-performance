@@ -39,9 +39,9 @@ enriched as (
             else 'LONG_TERM'
         end as trade_duration_bucket,
 
-        date_part('month', exit_date) as exit_month,
+        cast(date_trunc('month',   exit_date) as date)  as exit_month,
+        cast(date_trunc('quarter', exit_date) as date)  as exit_quarter,
         date_part('year', exit_date) as exit_year,
-        date_part('quarter', exit_date) as exit_quarter,
 
     from trades
 )

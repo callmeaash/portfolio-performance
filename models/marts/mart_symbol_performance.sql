@@ -79,7 +79,15 @@ ranked as (
         -- portfolio contribution rank
         rank() over (order by st.total_pnl desc) as pnl_rank,
         rank() over (order by st.win_rate_pct desc) as win_rate_rank,
-        rank() over (order by st.profit_factor desc) as profit_factor_rank
+        rank() over (order by st.profit_factor desc) as profit_factor_rank,
+
+        -- performance tier
+        case
+            when st.total_pnl > 0 and st.win_rate_pct >= 50 then 'STAR'
+            when st.total_pnl > 0 and st.win_rate_pct <  50 then 'PROFITABLE'
+            when st.total_pnl < 0 and st.win_rate_pct >= 50 then 'UNDERPERFORMER'
+            else 'AVOID'
+        end as performance_tier
 
     from symbol_trades st
     left join ohlc_stats os using (symbol)

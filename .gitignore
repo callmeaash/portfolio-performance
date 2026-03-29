@@ -7,4 +7,6 @@ logs/
 .vscode/
 .user.yml
 portfolio-dashboard
+.venv
+
 
