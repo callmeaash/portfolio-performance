@@ -8,5 +8,5 @@ logs/
 .user.yml
 portfolio-dashboard
 .venv
-
+__pycache__/
 
